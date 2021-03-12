@@ -1,0 +1,10 @@
+CORE
+main.c
+--enforce-all-contracts
+^EXIT=10$
+^SIGNAL=0$
+^VERIFICATION FAILED$
+--
+--
+Verification:
+This test asserts the postconditions of f1.
