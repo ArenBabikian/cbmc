@@ -237,20 +237,20 @@ bool code_contractst::apply_function_contract(
   //TODO Generalize
   if(ensures.id()==ID_exists || ensures.id()==ID_forall)
   {
-    exprt tup = ensures.operands().front();
-    exprt q_var = tup.operands().front();
-    symbol_exprt q_sym = to_symbol_expr(q_var);
+    exprt tuple = ensures.operands().front();
+    exprt quantified_variable = tuple.operands().front();
+    symbol_exprt quantified_symbol = to_symbol_expr(quantified_variable);
 
-    symbolt new_sym = get_fresh_aux_symbol(
-                             q_sym.type(),
-                             id2string(q_sym.get_identifier()),
-                             "tmp",
-                             q_sym.source_location(),
-                             symbol_table.lookup_ref(function).mode,
-                             symbol_table);
+    symbolt new_symbol = get_fresh_aux_symbol(
+      quantified_symbol.type(),
+      id2string(quantified_symbol.get_identifier()),
+      "tmp",
+      quantified_symbol.source_location(),
+      symbol_table.lookup_ref(function).mode,
+      symbol_table);
 
-    symbol_exprt q(q_sym.get_identifier(), q_sym.type());
-    replace.insert(q, new_sym.symbol_expr());
+    symbol_exprt q(quantified_symbol.get_identifier(), quantified_symbol.type());
+    replace.insert(q, new_symbol.symbol_expr());
   }
   // Replace expressions in the contract components.
   replace(assigns);
