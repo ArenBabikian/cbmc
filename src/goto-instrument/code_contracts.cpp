@@ -232,6 +232,26 @@ bool code_contractst::apply_function_contract(
     }
   }
 
+  // Replace quantified variables
+  //TODO go at more depths
+  //TODO Generalize
+  if(ensures.id()==ID_exists || ensures.id()==ID_forall)
+  {
+    exprt tup = ensures.operands().front();
+    exprt q_var = tup.operands().front();
+    symbol_exprt q_sym = to_symbol_expr(q_var);
+
+    symbolt new_sym = get_fresh_aux_symbol(
+                             q_sym.type(),
+                             id2string(q_sym.get_identifier()),
+                             "tmp",
+                             q_sym.source_location(),
+                             symbol_table.lookup_ref(function).mode,
+                             symbol_table);
+
+    symbol_exprt q(q_sym.get_identifier(), q_sym.type());
+    replace.insert(q, new_sym.symbol_expr());
+  }
   // Replace expressions in the contract components.
   replace(assigns);
   replace(requires);
