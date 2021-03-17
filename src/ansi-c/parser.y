@@ -101,6 +101,7 @@ extern char *yyansi_ctext;
 %token TOK_NE        "!="
 %token TOK_ANDAND    "&&"
 %token TOK_OROR      "||"
+%token TOK_RANGE     ".."
 %token TOK_ELLIPSIS  "..."
 
 /*** modifying assignment operators ***/
@@ -532,13 +533,60 @@ target_list:
         ;
 
 target:
+          deref_target
+        | target '[' array_index ']'
+        { binary($$, $1, $2, ID_range, $3); }
+        | target '[' array_range ']'
+        { binary($$, $1, $2, ID_range, $3); }
+        ;
+
+array_index:
           identifier
-        | '*' target
+        | integer
+        ;
+
+array_range:
+        array_index ',' array_index
+        {
+          $$=$2;
+          set($$, ID_range);
+          mto($$, $1);
+          mto($$, $3);
+        }
+        ;
+
+deref_target:
+          member_target
+        | '*' deref_target
         {
           $$=$1;
           set($$, ID_dereference);
           mto($$, $2);
         }
+        ;
+
+member_target:
+          primary_target
+        | member_target '.' member_name
+        {
+          $$=$2;
+          set($$, ID_member);
+          mto($$, $1);
+          parser_stack($$).set(ID_component_name, parser_stack($3).get(ID_C_base_name));
+        }
+        | member_target TOK_ARROW member_name
+        {
+          $$=$2;
+          set($$, ID_ptrmember);
+          mto($$, $1);
+          parser_stack($$).set(ID_component_name, parser_stack($3).get(ID_C_base_name));
+        }
+        ;
+
+primary_target:
+          identifier
+        | '(' target ')'
+        { $$ = $2; }
         ;
 
 statement_expression: '(' compound_statement ')'
