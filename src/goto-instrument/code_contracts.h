@@ -22,6 +22,7 @@ Date: February 2016
 #include <goto-programs/goto_model.h>
 
 #include <util/namespace.h>
+#include <util/replace_symbol.h>
 
 class messaget;
 
@@ -150,6 +151,13 @@ protected:
     const source_locationt &source_location,
     const irep_idt &function_id,
     const irep_idt &mode);
+
+  //If the expression is a quantified expression, this function adds
+  //the quantified variable to the symbol table and to the expression map
+  void add_quantified_variable(
+    exprt expression, 
+    replace_symbolt &replace,
+    irep_idt mode);
 };
 
 #define FLAG_REPLACE_CALL "replace-call-with-contract"
