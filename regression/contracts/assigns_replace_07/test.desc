@@ -1,0 +1,10 @@
+CORE
+main.c
+--replace-all-calls-with-contracts
+^EXIT=10$
+^SIGNAL=0$
+^VERIFICATION FAILED$
+--
+--
+Checks whether the values inside an array range specified by the assigns
+target are havocked when calling the associated function.

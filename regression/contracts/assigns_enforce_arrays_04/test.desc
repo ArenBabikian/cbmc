@@ -1,0 +1,11 @@
+CORE
+main.c
+--enforce-all-contracts
+^EXIT=0$
+^SIGNAL=0$
+^VERIFICATION SUCCESSFUL$
+--
+--
+Checks whether verification succeeds when an array is assigned at both upper
+and lower bounds of its assignable array range. Single-value array range
+assignment is checked as well.
