@@ -1,0 +1,14 @@
+CORE
+main.c
+--enforce-all-contracts
+^EXIT=0$
+^SIGNAL=0$
+^VERIFICATION SUCCESSFUL$
+--
+--
+Verification:
+This test case checks the handling of a forall expression within
+a loop invariant.
+This test case does not check correctness of the for loop.
+Instead, it is a trivial quantified expression to ensure that
+quantifiers can be handled in loop invariants.

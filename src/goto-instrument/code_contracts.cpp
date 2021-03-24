@@ -94,6 +94,10 @@ void code_contractst::check_apply_invariants(
   if(invariant.is_nil())
     return;
 
+  replace_symbolt replace;
+  code_contractst::add_quantified_variable(invariant, replace, mode);
+  replace(invariant);
+
   // change
   //   H: loop;
   //   E: ...

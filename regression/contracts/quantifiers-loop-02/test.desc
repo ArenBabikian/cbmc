@@ -1,0 +1,16 @@
+KNOWNBUG
+main.c
+--enforce-all-contracts
+^EXIT=0$
+^SIGNAL=0$
+^VERIFICATION SUCCESSFUL$
+--
+--
+Verification:
+This test case checks the handling of a forall expression within
+a loop invariant.
+In this test, the quantified variable has a symbolic upper limit.
+
+Known Bug:
+Currently, cbmc (using the SAT back-end) does not support quantified
+expressions where the quantified variable has a symbolic range.

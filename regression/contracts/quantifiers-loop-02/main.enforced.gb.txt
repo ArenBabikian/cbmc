@@ -1,0 +1,97 @@
+Reading GOTO program from 'main.enforced.gb'
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+__CPROVER__start /* __CPROVER__start */
+        // 37 no location
+        // Labels: __CPROVER_HIDE
+        SKIP
+        // 38 no location
+        __CPROVER_initialize();
+        // 39 file main.c line 5
+        main();
+        // 40 no location
+        END_FUNCTION
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+__CPROVER_initialize /* __CPROVER_initialize */
+        // 17 no location
+        // Labels: __CPROVER_HIDE
+        SKIP
+        // 18 file <built-in-additions> line 20
+        __CPROVER_alloca_object = NULL;
+        // 19 file <built-in-additions> line 14
+        __CPROVER_dead_object = NULL;
+        // 20 file <built-in-additions> line 13
+        __CPROVER_deallocated = NULL;
+        // 21 file <built-in-additions> line 23
+        __CPROVER_malloc_failure_mode_assert_then_assume = 2;
+        // 22 file <built-in-additions> line 22
+        __CPROVER_malloc_failure_mode_return_null = 1;
+        // 23 file <built-in-additions> line 17
+        __CPROVER_malloc_is_new_array = 0 != 0;
+        // 24 file <built-in-additions> line 15
+        __CPROVER_malloc_object = NULL;
+        // 25 file <built-in-additions> line 16
+        __CPROVER_malloc_size = 0ul;
+        // 26 file <built-in-additions> line 24
+        __CPROVER_max_malloc_size = (__CPROVER_size_t)36028797018963968l;
+        // 27 file <built-in-additions> line 18
+        __CPROVER_memory_leak = NULL;
+        // 28 file <built-in-additions> line 8
+        __CPROVER_next_thread_id = (unsigned long int)0;
+        // 29 file <built-in-additions> line 11
+        __CPROVER_next_thread_key = (unsigned long int)0;
+        // 30 file <built-in-additions> line 38
+        __CPROVER_pipe_count = (unsigned int)0;
+        // 31 file <built-in-additions> line 29
+        __CPROVER_rounding_mode = 0;
+        // 32 file <built-in-additions> line 6
+        __CPROVER_thread_id = (unsigned long int)0;
+        // 33 file <built-in-additions> line 10
+        __CPROVER_thread_key_dtors = ARRAY_OF(((void (*)(void *))NULL));
+        // 34 file <built-in-additions> line 9
+        __CPROVER_thread_keys = ARRAY_OF(NULL);
+        // 35 file <built-in-additions> line 7
+        __CPROVER_threads_exited = ARRAY_OF(FALSE);
+        // 36 no location
+        END_FUNCTION
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+main /* main */
+        // 0 file main.c line 7 function main
+        signed int a[8l];
+        // 1 file main.c line 8 function main
+        signed int i;
+        // 2 file main.c line 8 function main
+        i = 0;
+        // 3 file main.c line 8 function main
+        ASSERT 0 <= i && i <= 8 && (forall { signed int tmp; 0 <= tmp && tmp < i ==> a[(signed long int)tmp] == 1 }) // Check loop invariant before entry
+        // 4 file main.c line 8 function main
+        irep("(\"code\" \"\" (\"address_of\" \"\" (\"index\" \"\" (\"symbol\" \"type\" (\"array\" \"\" (\"signedbv\" \"width\" (\"32\") \"#c_type\" (\"signed_int\")) \"#source_location\" (\"\" \"file\" (\"main.c\") \"line\" (\"7\") \"function\" (\"main\") \"working_directory\" (\"/Users/saspadhi/Repos/cbmc-wip/regression/contracts/quantifiers-loop-02\")) \"size\" (\"constant\" \"type\" (\"signedbv\" \"width\" (\"64\") \"#c_type\" (\"signed_long_int\")) \"value\" (\"8\"))) \"#source_location\" (\"\" \"file\" (\"main.c\") \"line\" (\"19\") \"function\" (\"main\") \"working_directory\" (\"/Users/saspadhi/Repos/cbmc-wip/regression/contracts/quantifiers-loop-02\")) \"identifier\" (\"main::1::a\") \"#lvalue\" (\"1\")) \"\" (\"typecast\" \"\" (\"symbol\" \"type\" (\"signedbv\" \"width\" (\"32\") \"#c_type\" (\"signed_int\")) \"#source_location\" (\"\" \"file\" (\"main.c\") \"line\" (\"19\") \"function\" (\"main\") \"working_directory\" (\"/Users/saspadhi/Repos/cbmc-wip/regression/contracts/quantifiers-loop-02\")) \"identifier\" (\"main::1::1::i\") \"#lvalue\" (\"1\")) \"type\" (\"signedbv\" \"width\" (\"64\") \"#c_type\" (\"signed_long_int\"))) \"type\" (\"signedbv\" \"width\" (\"32\") \"#c_type\" (\"signed_int\")) \"#source_location\" (\"\" \"file\" (\"main.c\") \"line\" (\"19\") \"function\" (\"main\") \"working_directory\" (\"/Users/saspadhi/Repos/cbmc-wip/regression/contracts/quantifiers-loop-02\")) \"#lvalue\" (\"1\")) \"type\" (\"pointer\" \"\" (\"signedbv\" \"width\" (\"32\") \"#c_type\" (\"signed_int\")) \"width\" (\"64\"))) \"type\" (\"empty\") \"#source_location\" (\"\" \"file\" (\"main.c\") \"line\" (\"8\") \"function\" (\"main\") \"working_directory\" (\"/Users/saspadhi/Repos/cbmc-wip/regression/contracts/quantifiers-loop-02\")) \"statement\" (\"havoc_object\"))")
+        // 5 file main.c line 8 function main
+        i = NONDET(signed int);
+        // 6 file main.c line 8 function main
+        ASSUME 0 <= i && i <= 8 && (forall { signed int tmp; 0 <= tmp && tmp < i ==> a[(signed long int)tmp] == 1 })
+        // 7 file main.c line 8 function main
+        IF !(i < 8) THEN GOTO 1
+        // 8 file main.c line 19 function main
+        a[(signed long int)i] = 1;
+        // 9 file main.c line 8 function main
+        i = i + 1;
+        // 10 file main.c line 8 function main
+        ASSERT 0 <= i && i <= 8 && (forall { signed int tmp; 0 <= tmp && tmp < i ==> a[(signed long int)tmp] == 1 }) // Check that loop invariant is preserved
+        // 11 file main.c line 8 function main
+        ASSUME FALSE
+        // 12 file main.c line 8 function main
+     1: SKIP
+        // 13 file main.c line 20 function main
+        dead i;
+        // 14 file main.c line 23 function main
+        ASSERT !((signed long int)(signed long int)!(forall { signed int k; 0 <= k && k < 8 ==> a[(signed long int)k] == 1 }) != 0l) // assertion __CPROVER_forall { int k; (0 <= k && k < N) ==> a[k] == 1 }
+        // 15 file main.c line 28 function main
+        dead a;
+        // 16 file main.c line 28 function main
+        END_FUNCTION
+
