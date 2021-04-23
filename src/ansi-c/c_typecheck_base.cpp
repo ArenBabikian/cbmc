@@ -729,6 +729,7 @@ void c_typecheck_baset::typecheck_declaration(
         if(as_const(code_type).requires().is_not_nil())
         {
           auto &requires = code_type.requires();
+          typecheck_expr_requires(requires);
           typecheck_expr(requires);
           implicit_typecast_bool(requires);
         }

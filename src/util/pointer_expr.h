@@ -462,6 +462,30 @@ public:
   }
 };
 
+/// \brief A base class for a predicate that indicates the pre-function-call
+/// value of a variable passed as a parameter to a function
+class old_exprt : public unary_exprt
+{
+public:
+  explicit old_exprt(irep_idt id, exprt variable)
+    : unary_exprt(id, std::move(variable))
+  {
+  }
+
+  const exprt &variable() const
+  {
+    return op0();
+  }
+};
+
+inline const old_exprt &to_old_expr(const exprt &expr)
+{
+  PRECONDITION(expr.id() == ID_old);
+  auto &ret = static_cast<const old_exprt &>(expr);
+  validate_expr(ret);
+  return ret;
+}
+
 /// \brief A base class for a predicate that indicates that an
 /// address range is ok to read or write
 class r_or_w_ok_exprt : public binary_predicate_exprt

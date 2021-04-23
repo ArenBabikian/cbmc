@@ -205,6 +205,7 @@ protected:
     const symbol_exprt &function_symbol);
   virtual exprt
   typecheck_shuffle_vector(const side_effect_expr_function_callt &expr);
+  virtual void typecheck_expr_requires(exprt &expr);
 
   virtual void make_index_type(exprt &expr);
   virtual void make_constant(exprt &expr);

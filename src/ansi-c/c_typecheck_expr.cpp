@@ -2575,6 +2575,20 @@ exprt c_typecheck_baset::do_special_functions(
 
     return std::move(ok_expr);
   }
+  else if(identifier == CPROVER_PREFIX "old")
+  {
+    if(expr.arguments().size() != 1)
+    {
+      error().source_location = f_op.source_location();
+      error() << identifier << " expects one operands" << eom;
+      throw 0;
+    }
+
+    old_exprt old_expr(ID_old, expr.arguments()[0]);
+    old_expr.add_source_location() = source_location;
+
+    return std::move(old_expr);
+  }
   else if(identifier==CPROVER_PREFIX "isinff" ||
           identifier==CPROVER_PREFIX "isinfd" ||
           identifier==CPROVER_PREFIX "isinfld" ||
@@ -3795,5 +3809,28 @@ void c_typecheck_baset::make_constant_index(exprt &expr)
     error().source_location=expr.find_source_location();
     error() << "conversion to integer constant failed" << eom;
     throw 0;
+  }
+}
+
+void c_typecheck_baset::typecheck_expr_requires(exprt &expr)
+{
+  for(auto &op : expr.operands())
+  {
+    typecheck_expr_requires(op);
+  }
+
+  if(expr.id() == ID_side_effect && expr.get(ID_statement) == ID_function_call)
+  {
+    const auto &func_call_expr = to_side_effect_expr_function_call(expr);
+    const exprt &f_op = func_call_expr.function();
+    const irep_idt &identifier = to_symbol_expr(f_op).get_identifier();
+    if(identifier == CPROVER_PREFIX "old")
+    {
+      error().source_location = f_op.source_location();
+      error() << CPROVER_PREFIX
+        "old expressions are not allowed in " CPROVER_PREFIX "requires clauses"
+              << eom;
+      throw 0;
+    }
   }
 }
