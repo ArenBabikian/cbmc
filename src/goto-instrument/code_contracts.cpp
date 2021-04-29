@@ -622,6 +622,28 @@ void code_contractst::instrument_call_statement(
 
   exprt called_assigns =
     to_code_with_contract_type(called_symbol.type).assigns();
+
+  if (called_assigns.operands().size() == 1)
+  {
+    auto &operand = called_assigns.operands()[0];
+    if (called_assigns.operands()[0].id() == ID_unary_minus)
+    {
+      auto &internal_expr = to_unary_minus_expr(operand).op();
+      if (internal_expr.id() == ID_constant)
+      {
+        auto &const_value = to_constant_expr(internal_expr).get_value();
+        if (const_value == ID_1)
+        {
+          // __CPROVER_assigns(-1)
+
+          //Don't assert anything
+          return;
+
+        }
+      }
+    }
+  }
+
   if(called_assigns.is_nil()) // Called function has no assigns clause
   {
     // Create a false assertion, so the analysis
