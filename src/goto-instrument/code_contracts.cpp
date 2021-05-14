@@ -213,12 +213,10 @@ void code_contractst::add_quantified_variable(
   else if(expression.id() == ID_exists || expression.id() == ID_forall)
   {
     // When a quantifier expression is found,
-    // 1. get quantified variables
+    // for each quantified variable ...
     const auto &quantifier_expression = to_quantifier_expr(expression);
-    const auto &quantified_variables = quantifier_expression.variables();
-    for(const auto &quantified_variable : quantified_variables)
+    for(const auto &quantified_variable : quantifier_expression.variables())
     {
-      // for each quantified variable...
       const auto &quantified_symbol = to_symbol_expr(quantified_variable);
 
       // 1.1 create fresh symbol
@@ -413,7 +411,6 @@ bool code_contractst::apply_function_contract(
   code_contractst::add_quantified_variable(requires, replace, mode);
 
   // Replace expressions in the contract components.
-  replace(assigns);
   replace(requires);
   replace(ensures);
 
